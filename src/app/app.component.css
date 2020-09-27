@@ -1,0 +1,90 @@
+.header_row {
+    border-radius: 20px !important;
+    border-width: 1.5px !important;
+    border-style: solid !important;
+    border-color: rgb(114, 95, 238) !important;
+    width: 90%;  /*Tested and working as expected: */
+    padding-top: 1%;
+    margin: 0px auto;
+    float: none;
+    background-color: rgb(19, 16, 219)
+  }
+
+  .body_page {
+    border-radius: 20px !important;
+    width: 90%;  /*Tested and working as expected: */
+    padding-top: 1%;
+    margin: 0px auto;
+    float: none;
+  
+    background-color: #F2F2F2;
+  }
+
+
+  .col_height{
+    height: 790px;
+    border-radius: 20px !important;
+    border-width: 3.5px !important;
+    border-style: solid !important;
+  }
+
+  .col_height_collapse{
+    height: 600px;
+    border-radius: 20px !important;
+    border-width: 3.5px !important;
+    border-style: solid !important;
+  }
+
+  .body_all {
+    border-radius: 10px !important;
+    border-width: 1.5px !important;
+    border-style: solid !important;
+    border-color: rgb(226, 226, 226) !important;
+    width: 90%;  /*Tested and working as expected: */
+    padding-top: 1%;
+    margin: 0px auto;
+    float: none;
+   
+    background-color: #F6F6F6
+  }
+
+
+  .scroll {
+    overflow-y: scroll;
+     max-height: 480px
+  }
+
+  .scroll_collapse {
+    overflow-y: scroll;
+     max-height: 680px
+  }
+
+  .height-span{
+    height: 31px;
+  }
+
+
+
+  .fa {
+    margin-left: 8px;
+  }
+
+
+
+
+.btn-arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  
+  border-top: 20px solid #f00;
+}
+
+.red{
+  margin-bottom: 8px;
+}
+
+.red:hover{
+  cursor: pointer;
+}

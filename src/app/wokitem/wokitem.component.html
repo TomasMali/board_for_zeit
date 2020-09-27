@@ -1,0 +1,29 @@
+<div class="list-group-item mb-1 text-danger" [style.background-color]="selectedColor">
+
+  <button class=" text-dark mr-2" (click)="deleteWorkItem()">
+    <i class="fas fa-trash"></i>
+  </button>
+
+  Colore:
+  <select (change)="selectOptionColors($event.target.value)" [(ngModel)]="selectedColor" name="selectedColor"
+    [value]= colors[0].name>
+    <option *ngFor="let color of colors">{{color.name}}</option>
+  </select>
+
+  Sposta:
+  <select (change)="selectOptionState($event.target.value)" [(ngModel)]="selectedState" name="selectedState"
+    [value]=states[0].name>
+    <option *ngFor="let state of states">{{state.name}}</option>
+  </select>
+
+ 
+<button class="btn btn-sm-primary" (click)="copy()"><i class = "far fa-copy" ></i> </button>
+
+  <span>
+    <kbd class="ml-3"> {{workitem.wi}}</kbd> [{{workitem.storyPoint}}] <small class="text-info">
+      [{{workitem.sprint}}]
+    </small> <small class="text-primary"> <b> {{workitem.description}} </b>
+    </small>
+  </span>
+
+</div>
