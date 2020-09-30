@@ -16,8 +16,8 @@ export class MessagingService {
   requestPermission() {
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
-        console.log(token);
-     //REMOVE   this.workItemService.insertTokenPushNotification(token)
+       console.log(token);
+        this.workItemService.insertTokenPushNotification(token)
       },
       (err) => {
         console.error('Unable to get permission to notify.', err);
@@ -30,7 +30,7 @@ export class MessagingService {
       (payload) => {
         console.log("new message received. ", payload);
         this.currentMessage.next(payload);
-     //   this.showWithClick(payload)
+        this.showWithClick(payload)
       })
   }
 
@@ -44,9 +44,13 @@ let option = {
 
 let notify: Notification = new Notification(title,option)
 
-notify.onclick = event => {
+notify.onclick = event => {     
   event.preventDefault();
-  window.location.href = "https://board-ivs97i8m4.now.sh/"
+  
+  window.location.href = "https://board.tomasmali08.now.sh/"
+
+
+  // "https://board-ivs97i8m4.now.sh/"   "https://board-3sxgucy4u.vercel.app/"
 
 }
 
