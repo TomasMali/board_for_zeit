@@ -258,7 +258,7 @@ export class WorkitemService {
   notifyAll(wi: Workitem) {
 
 
-    if (false) {
+    if (true) {
 
       var state = ""
 
