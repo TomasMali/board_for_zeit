@@ -4,11 +4,13 @@ import { Workitem } from './wokitem/workitem';
 import { Subject } from 'rxjs';
 import { map, filter } from 'rxjs/operators'
 import { createOfflineCompileUrlResolver } from '@angular/compiler';
+import { BurndownService } from './burndown.service';
+import { Burndown } from './burndown';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkitemService {    
+export class WorkitemService {
 
 
   data: object
@@ -21,28 +23,30 @@ export class WorkitemService {
   //
   pushnotification = "https://board--server.herokuapp.com/pushtoken"
   pushnotificationInsert = "https://board--server.herokuapp.com/pushtoken/insert"
-  
 
 
 
-/*
-  board = "http://93.49.6.246:3008/board"
-  insertWi = "http://93.49.6.246:3008/board/insert"
-  deleteWi = "http://93.49.6.246:3008/board/delete_one"
-  //
-  pushnotification = "http://93.49.6.246:3008/pushtoken"
-  pushnotificationInsert = "http://93.49.6.246:3008/pushtoken/insert"
-*/
+
+  /*
+    board = "http://93.49.6.246:3008/board"
+    insertWi = "http://93.49.6.246:3008/board/insert"
+    deleteWi = "http://93.49.6.246:3008/board/delete_one"
+    //
+    pushnotification = "http://93.49.6.246:3008/pushtoken"
+    pushnotificationInsert = "http://93.49.6.246:3008/pushtoken/insert"
+  */
 
 
 
   private workItemsUpdatet = new Subject<Workitem[]>()
   private workItems_Start = new Subject<Workitem[]>()
-  private workItems: Workitem[] = []
+  private totaleStoryPointsUpdatet = new Subject<number>()
 
+
+  private workItems: Workitem[] = []
   pushNotificationTokens: string[] = []
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public BurndownService: BurndownService) { }
 
 
 
@@ -54,28 +58,30 @@ export class WorkitemService {
     return this.workItems_Start.asObservable()
   }
 
-
+  getTotaleSP() {
+    return this.totaleStoryPointsUpdatet.asObservable()
+  }
 
 
   getAll() {
     this.http.get<{ message: any }>(this.board)
-    .pipe(map(data => {
+      .pipe(map(data => {
 
-      return data.message.map(workI => {
+        return data.message.map(workI => {
 
-        return {
-          wi: workI.wi,
-          storyPoint: workI.storyPoint,
-          sprint: workI.sprint,
-          description: workI.description,
-          state: workI.state,
-          color: workI.color
-        }
+          return {
+            wi: workI.wi,
+            storyPoint: workI.storyPoint,
+            sprint: workI.sprint,
+            description: workI.description,
+            state: workI.state,
+            color: workI.color
+          }
+        })
+      }))
+      .subscribe(resultData => {
+        this.workItems_Start.next([...resultData])
       })
-    }))
-    .subscribe(resultData => {
-      this.workItems_Start.next([...resultData])
-    })
   }
 
 
@@ -103,6 +109,8 @@ export class WorkitemService {
         })
         this.workItemsUpdatet.next([...this.workItems])
       })
+
+    //   this.BurndownService.getBurndownAsArray(sprint)
   }
 
   getOne(wi) {
@@ -110,7 +118,7 @@ export class WorkitemService {
   }
 
 
-  changeColorOrStateWorkItem(wi: Workitem) {
+  changeColorOrStateWorkItem(wi: Workitem, prevStato: string) {
     return this.http.post<boolean>(this.insertWi, wi)
       .subscribe(
         resultData => {
@@ -122,6 +130,47 @@ export class WorkitemService {
             // voglio modificare lo stato
             if (wi.color == null) {
               wi_new.state = wi.state
+
+              if (prevStato != null) {
+                // inserisco un nuovo burndown
+
+                var dt = new Date();
+                var day = dt.getDate().toString().padStart(1, "0");
+
+
+                var qta = 0;
+
+                if (prevStato == "D") {
+                  if (wi.state == "T")
+                    qta = -(wi.storyPoint / 2)
+                  else
+                    qta = -(wi.storyPoint)
+                }
+                else if (prevStato == "T") {
+                  if (wi.state == "D")
+                    qta = (wi.storyPoint / 2)
+                  else
+                    qta = -(wi.storyPoint / 2)
+                }
+                else {
+                  if (wi.state == "T")
+                    qta = (wi.storyPoint / 2)
+                  else if (wi.state == "D")
+                    qta = wi.storyPoint
+                }
+
+
+                var bd: Burndown = {
+                  sprint: wi.sprint,
+                  giorni: day,
+                  storyPoint: qta
+
+                };
+
+
+                this.BurndownService.insertOrUpdateStoryPoint(bd)
+                this.BurndownService.getBurndownAsArray(wi.sprint)
+              }
             }
             else
               // voglio modificare il colore
@@ -172,7 +221,7 @@ export class WorkitemService {
 
           if (resultData.message) {
             this.workItems.push(wi)
-           // this.workItemsUpdatet.next([...this.workItems])
+            // this.workItemsUpdatet.next([...this.workItems])
           }
           else {
             alert("Work item già esistente")
@@ -208,73 +257,78 @@ export class WorkitemService {
 
   notifyAll(wi: Workitem) {
 
-    var state = ""
+
+    if (false) {
+
+      var state = ""
 
 
-    if (wi.state === "N")
-      state = "To do"
-    else
-      if (wi.state === "S")
-        state = "Start working"
-      else if (wi.state === "T")
-        state = "Test"
-      else if (wi.state === "D")
-        state = "Done"
+      if (wi.state === "N")
+        state = "To do"
+      else
+        if (wi.state === "S")
+          state = "Start working"
+        else if (wi.state === "T")
+          state = "Test"
+        else if (wi.state === "D")
+          state = "Done"
 
-    this.http.get<{ message: any }>(this.pushnotification)
-      .pipe(map(data => {
-        return data.message.map(tokenReturned => {
-          return tokenReturned.token
-        })
-      }))
-      .subscribe(resultData => {
-        this.pushNotificationTokens = resultData
+      this.http.get<{ message: any }>(this.pushnotification)
+        .pipe(map(data => {
+          return data.message.map(tokenReturned => {
+            return tokenReturned.token
+          })
+        }))
+        .subscribe(resultData => {
+          this.pushNotificationTokens = resultData
 
-        console.log("I dati token sono: " + this.pushNotificationTokens)
+          console.log("I dati token sono: " + this.pushNotificationTokens)
 
-        // per ogni token manda un messaggio 
-
-
-        this.pushNotificationTokens.forEach(token => {
+          // per ogni token manda un messaggio 
 
 
+          this.pushNotificationTokens.forEach(token => {
 
 
-          const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': 'key=AAAA_tYOfNY:APA91bEL7LjhmU2jPjoQTLSI9hww7mDt7hLwcIPlyu6-c8GB_vcG39bflYUCxKOkKBz3iGgbRiWvylZ_CwUj_aWuYrzVbOkDGZcjNG6TRMiT6AN1KkQcJZKAK_n_jFc8uZDMxCR2ZNnQ'
-            })
-          };
 
-          this.http.post<any>("https://fcm.googleapis.com/fcm/send", {
-            "notification": {
-              "title": "Dashboard",
-              "icon": "",
-              "image": "",
-              "body": wi.description.substring(0,40) + " ---> " + state
-            },
-            "to": token
-          }, httpOptions)
-            .subscribe(
-              resultData => {
 
-                console.log(resultData)
+            const httpOptions = {
+              headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'key=AAAA_tYOfNY:APA91bEL7LjhmU2jPjoQTLSI9hww7mDt7hLwcIPlyu6-c8GB_vcG39bflYUCxKOkKBz3iGgbRiWvylZ_CwUj_aWuYrzVbOkDGZcjNG6TRMiT6AN1KkQcJZKAK_n_jFc8uZDMxCR2ZNnQ'
+              })
+            };
 
-                if (resultData.message) {
-                  console.log("Token inserito correnttamente")
-                }
-                else {
-                  console.log("Token pushNotification già esistente")
-                }
+            this.http.post<any>("https://fcm.googleapis.com/fcm/send", {
+              "notification": {
+                "title": "Dashboard",
+                "icon": "",
+                "image": "",
+                "body": wi.description.substring(0, 40) + " ---> " + state
               },
-              err => console.log(err)
-            )
+              "to": token
+            }, httpOptions)
+              .subscribe(
+                resultData => {
+
+                  console.log(resultData)
+
+                  if (resultData.message) {
+                    console.log("Token inserito correnttamente")
+                  }
+                  else {
+                    console.log("Token pushNotification già esistente")
+                  }
+                },
+                err => console.log(err)
+              )
+
+          })
+
 
         })
 
-
-      })
+    }
   }
 
 
@@ -283,7 +337,7 @@ export class WorkitemService {
 
 
 
-  deleteWorkI(wi: number, sprint: string) {
+  deleteWorkI(wi: number, sprint: string, workitem: Workitem) {
 
     const options = {
       headers: new HttpHeaders({
@@ -303,19 +357,42 @@ export class WorkitemService {
           }), 1);
 
           this.workItemsUpdatet.next([...this.workItems])
+
+          var dt = new Date();
+          var day = dt.getDate().toString().padStart(1, "0");
+
+
+          var qta = 0;
+          if (workitem.state == "T") {
+            qta = -(workitem.storyPoint / 2)
+          }
+          else
+            if (workitem.state == "D")
+              qta = -(workitem.storyPoint)
+
+          var bd: Burndown = {
+            sprint: sprint,
+            giorni: day,
+            storyPoint: qta
+
+          };
+
+          this.BurndownService.insertOrUpdateStoryPoint(bd)
+          this.BurndownService.getBurndownAsArray(sprint)
+
         },
         err => alert("Problemi con la cancellazione!")
       )
   }
 
 
-  copyWorkI(wi: Workitem){
-// qui copy
-console.log("WI prima: " + wi.sprint)
-    wi.sprint =    "Sprint " + (parseInt(wi.sprint.slice(-2)) + 1);
+  copyWorkI(wi: Workitem) {
+    // qui copy
+    console.log("WI prima: " + wi.sprint)
+    wi.sprint = "Sprint " + (parseInt(wi.sprint.slice(-2)) + 1);
 
     console.log("WI: " + wi.sprint)
-this.CopyWorkItem(wi)
+    this.CopyWorkItem(wi)
 
   }
 

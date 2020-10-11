@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { WorkitemService } from './workitem.service';
 import { Subscription } from 'rxjs';
 import { MessagingService } from './service/messaging.service';
+import { BurndownService } from './burndown.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   selectedSprintNumber: string = ""
 
 
-  constructor(public WIService: WorkitemService, private messagingService: MessagingService) {
+  constructor(public WIService: WorkitemService, private messagingService: MessagingService, public BurndownService: BurndownService) {
   }
 
 
@@ -50,7 +51,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.message = this.messagingService.currentMessage
     //
 
-
     this.selectedSprintNumber = this.getCookie("sprint") === "" ? ("Sprint " + this.getSprintStart()) : this.getCookie("sprint")
 
     this.WIService.getAllWi(this.selectedSprintNumber)
@@ -58,6 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.workItemSUb = this.WIService.getWorkItemsUpdateListener()
       .subscribe((workItems_: Workitem[]) => {
         this.workItems = workItems_
+        this.BurndownService.getBurndownAsArray(this.selectedSprintNumber)
       })
 
   }
@@ -69,10 +70,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   getSprintStart() {
-
-
-
-
 
     var dateFuture: any = new Date(2020, 8, 8);
     var dateNow: any = new Date();
@@ -88,6 +85,14 @@ export class AppComponent implements OnInit, OnDestroy {
     return sprint + 11
   }
 
+
+  fai(sprint) {
+    document.cookie = "sprint_=" + sprint;
+  }
+
+  call() {
+    this.BurndownService.getBurndownCorrente()
+  }
 
 
   getCookie(cname) {
@@ -109,6 +114,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onSprintChange(sprint: string) {
     this.selectedSprintNumber = sprint
+
     this.WIService.getAllWi(sprint)
 
     document.cookie = "sprint=" + sprint;
@@ -142,8 +148,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
 
+  onInsertWiSubmit(dataForm) {
 
-  onInsertWiSubmit(data) {
+    var data = dataForm.value
     var obj = {
       wi: data.workItemForm,
       storyPoint: data.storyPointForm,
@@ -155,6 +162,16 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log("I coockie sono: " + this.getCookie("sprint"))
 
     this.WIService.insertWorkItem(obj)
+
+    this.selectedSprintNumber = obj.sprint
+
+
+    dataForm.form.get('workItemForm').reset()
+    dataForm.form.get('descForm').reset()
+    dataForm.form.get('storyPointForm').reset()
+
+
+
   }
 
   sprints = [
@@ -190,8 +207,6 @@ export class AppComponent implements OnInit, OnDestroy {
     return (this.workItems.filter(x => {
       return x.state === "N" // sta per to do 
     }))
-
-
   }
 
   getStartWorking() {

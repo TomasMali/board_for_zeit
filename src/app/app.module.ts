@@ -14,12 +14,16 @@ import { AngularFireModule } from '@angular/fire';
 import { MessagingService } from './service/messaging.service';
 import { environment } from '../environments/environment';
 import { AsyncPipe } from '../../node_modules/@angular/common';
+import { BurndownComponent } from './burndown/burndown.component';
 
+import { HighchartsChartComponent } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
     AppComponent,
     WokitemComponent,
+    BurndownComponent,
+    HighchartsChartComponent,
   ],
   imports: [
     BrowserModule,

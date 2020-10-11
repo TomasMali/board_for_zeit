@@ -71,7 +71,7 @@ export class WokitemComponent implements OnInit {
       state: null,
       color: colore
     }
-    this.WIService.changeColorOrStateWorkItem(workItem)
+    this.WIService.changeColorOrStateWorkItem(workItem, null)
 
 
 
@@ -90,7 +90,11 @@ export class WokitemComponent implements OnInit {
   selectedState: string = ""
 
   selectOptionState(sel) {
+
+ 
     this.selectedState = this.workitem.state
+
+    //console.log("Stato prima è:", this.selectedState  )
 
     const workItem = {
       wi: this.workitem.wi,
@@ -101,7 +105,7 @@ export class WokitemComponent implements OnInit {
       color: null
     }
 
-    this.WIService.changeColorOrStateWorkItem(workItem)
+    this.WIService.changeColorOrStateWorkItem(workItem, this.selectedState )
     //
     this.WIService.notifyAll(workItem)
 
@@ -113,7 +117,7 @@ export class WokitemComponent implements OnInit {
 
   deleteWorkItem() {
     if (confirm("Stai per cancellare il WI, proseguire?")) {
-      this.WIService.deleteWorkI(this.workitem.wi, this.workitem.sprint)
+      this.WIService.deleteWorkI(this.workitem.wi, this.workitem.sprint, this.workitem)
     }
   }
 

@@ -30,7 +30,7 @@
   <div class="container bg-dark pt-3 pl-3 pr-3 pb-2 my-3 text-white ">
 
 
-    <form #workItemForm="ngForm" (ngSubmit)="onInsertWiSubmit(workItemForm.value);  workItemForm.reset(); ">
+    <form #workItemForm="ngForm" (ngSubmit)="onInsertWiSubmit(workItemForm);  ">
 
       <div class="row " tabindex="-1">
 
@@ -191,4 +191,30 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!--  <button class="btn btn-sm-primary"  data-toggle="modal" data-target="#exampleModal1" (click)="fai(workitem.sprint)"><i class = "far fa-copy" ></i> </button>
+-->
+
+<app-burndown [selectedSprintNumber]="selectedSprintNumber"></app-burndown>
+
+
 </div>
+
+
+
+
+

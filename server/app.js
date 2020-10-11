@@ -10,6 +10,7 @@ const morgan = require('morgan')
 
 const board = require('./api/routs/board/board')
 const pushToken = require('./api/routs/notification/pushnotification')
+const burndown = require('./api/routs/burndown/burndown')
 
 
 const mongoose = require('mongoose')
@@ -52,7 +53,8 @@ app.use((req,res,next)=>{
 // just go to the ather file if you pass me ...
 
 app.use('/board', board)
-app.use('/pushtoken', pushToken)
+app.use('/pushtoken', pushToken)    
+app.use('/burndown', burndown)
 
 
 // if the user requires a path that doesnt exsists, i throw an error
