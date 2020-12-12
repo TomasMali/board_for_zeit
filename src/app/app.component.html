@@ -11,8 +11,6 @@
 
   <div class="collapse " id="demo" data-toggle="false"> 
 
-
-
   <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm.value);  searchForm.reset(); ">
     <div class="row mb-1 mt-3">
       <div class="col-1 ">
@@ -34,7 +32,10 @@
 
       <div class="row " tabindex="-1">
 
-        <div class="col col-0 col-md -1"></div>
+        <div class="col col-0 col-md -1">
+        
+
+        </div>
 
         <div class="col col-12 col-md-3">
 
@@ -132,8 +133,14 @@
 
     <div class="col bg-danger mr-1  text-center" [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark"> <i class="fas fa-align-right"></i> TO DO <small
-          class="pl-2 font-weight-bold font-italic "> ({{percTodo | number  }}%)</small> </h5>
+      <h5 class="font-weight-bold p-1 border-dark"> 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+      <!--  <i class="fas fa-align-right"></i>  -->  
+        TO DO 
+         <!--  <small class="pl-2 font-weight-bold font-italic "> ({{percTodo | number  }}%)</small> -->
+         <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+
+      </h5>
       <hr>
       <div class="list-group  " [ngClass]="{'scroll': getToDo().length >= 4 && collapse , 'scroll_collapse': !collapse && getToDo().length >= 3} ">
 
@@ -146,8 +153,14 @@
 
     <div class="col bg-warning mr-1  text-center" [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark"> <i class="fas fa-hourglass-start"></i> START WORKING <small
-          class="pl-2 font-weight-bold font-italic "> ({{percStart | number }}%)</small></h5>
+      <h5 class="font-weight-bold p-1 border-dark"> 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+      <!-- <i class="fas fa-hourglass-start"></i> -->  START WORKING 
+      <!-- <small class="pl-2 font-weight-bold font-italic "> ({{percStart | number }}%)</small>
+      -->
+      <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+
+      </h5>
       <hr>
 
       <div class="list-group " [ngClass]="{'scroll': getStartWorking().length >= 4 && collapse , 'scroll_collapse': !collapse && getStartWorking().length >= 3 } ">
@@ -160,8 +173,14 @@
 
     <div class="col bg-success mr-1 " [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark text-center "> <i class="fas fa-tasks"></i> TEST <small
-          class="pl-2 font-weight-bold font-italic "> ({{percTest | number  }}%)</small></h5>
+      <h5 class="font-weight-bold p-1 border-dark text-center "> 
+       <!-- <i class="fas fa-tasks"></i>  -->
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+        TEST
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+
+        <!--<small class="pl-2 font-weight-bold font-italic "> ({{percTest | number  }}%)</small> --> 
+        </h5>
       <hr>
 
       <div class="list-group" [ngClass]="{'scroll': getTest().length >= 4 && collapse , 'scroll_collapse': !collapse && getTest().length >= 3 }">
@@ -174,8 +193,15 @@
 
     <div class="col bg-primary " [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dar text-center " [class.text-dark]="false"> <i class="fas fa-check"></i>
-        DONE <small class="pl-2 font-weight-bold font-italic "> ({{percDone | number  }}%)</small></h5>
+      <h5 class="font-weight-bold p-1 border-dar text-center " [class.text-dark]="false">
+        <!-- <i class="fas fa-check"></i> --> 
+         <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+        DONE 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+
+       <!-- <small class="pl-2 font-weight-bold font-italic "> ({{percDone | number  }}%)</small> -->
+      
+      </h5>
       <hr>
 
       <div class="list-group " [ngClass]="{'scroll': getDone().length >= 4 && collapse , 'scroll_collapse': !collapse && getDone().length >= 3}">

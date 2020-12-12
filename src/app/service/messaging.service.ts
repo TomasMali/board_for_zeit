@@ -24,6 +24,7 @@ export class MessagingService {
       }
     );
   }
+
   
   receiveMessage() {
     this.angularFireMessaging.messages.subscribe(

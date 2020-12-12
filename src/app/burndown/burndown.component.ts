@@ -94,12 +94,10 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
           series: [
             {
               name: 'Ideal Train',
-              //data: [30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
               data: this.getIdeal(this.totaleSP.toString())
             },
             {
               name: 'Effort Remaining',
-              //  data: [33,5, 30, 24.5, 20, 20, 20, 19, 9, 9, 9, 9, 9, 6, 3, 3, 0]
               data: this.burnDownAsArray
             }
           ]
@@ -159,12 +157,10 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
           series: [
             {
               name: 'Ideal Train',
-              //data: [30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
               data: this.getIdeal(this.totaleSP.toString())
             },
             {
               name: 'Effort Remaining',
-              //  data: [33,5, 30, 24.5, 20, 20, 20, 19, 9, 9, 9, 9, 9, 6, 3, 3, 0]
               data: this.burnDownAsArray
             }
           ]
@@ -195,12 +191,10 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
       series: [
         {
           name: 'Ideal Train',
-          //data: [30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
           data: this.getIdeal(this.totaleSP.toString())
         },
         {
           name: 'Effort Remaining',
-          //  data: [33,5, 30, 24.5, 20, 20, 20, 19, 9, 9, 9, 9, 9, 6, 3, 3, 0]
           data: this.burnDownAsArray
         }
       ]
@@ -226,15 +220,13 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
 
 
   getGiorni() {
-    //console.log("CIICICICICICICICICCI")
-
     var giorno = this.selectedSprintNumber
 
     var map = new Map();
     map.set('Sprint 13', ["0", "29", "30", "1", "2", "5", "6", "7", "8", "9", "12", "13", "14", "15", "16", "19"]);
     map.set('Sprint 14', ["0", "10", "21", "22", "23", "26", "27", "28", "29", "30", "2", "3", "4", "5", "6", "9"]);
     map.set('Sprint 15', ["0", "10", "11", "12", "13", "16", "17", "18", "19", "20", "23", "24", "25", "26", "27", "30"]);
-    map.set('Sprint 16', ["0", "1", "2", "3", "4", "7", "8", "9", "10", "11", "14", "15", "16", "17", "18", "21"]);
+    map.set('Sprint 16', ["0", "1", "2", "3", "4", "7", "9", "10", "11", "14", "15", "16", "17", "18", "21"]);
     map.set('Sprint 17', ["0", "22", "23", "24", "25", "28", "29", "30", "31", "1", "4", "5", "6", "7", "8", "11"]);
 
     return map.get(giorno)
@@ -266,12 +258,18 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
 
   getIdeal(tot) {
 
-    let calc = tot / 15
+  
+var tot_giorni = 15;
+
+if (this.selectedSprintNumber == "Sprint 16")
+   tot_giorni = 14;
+
+    let calc = tot / tot_giorni
     var ideal = []
     ideal[0] = tot
-    ideal[15] = 0
-    for (var i = 1; i < 16; i++) {
-      ideal[15 - i] = (i * calc)
+    ideal[tot_giorni] = 0
+    for (var i = 1; i < (tot_giorni + 1); i++) {
+      ideal[tot_giorni - i] = (i * calc)
     }
 
     return ideal
