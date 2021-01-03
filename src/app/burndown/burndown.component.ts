@@ -42,11 +42,6 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-
-
-
-
-
   }
 
 
@@ -227,8 +222,11 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
     map.set('Sprint 14', ["0", "10", "21", "22", "23", "26", "27", "28", "29", "30", "2", "3", "4", "5", "6", "9"]);
     map.set('Sprint 15', ["0", "10", "11", "12", "13", "16", "17", "18", "19", "20", "23", "24", "25", "26", "27", "30"]);
     map.set('Sprint 16', ["0", "1", "2", "3", "4", "7", "9", "10", "11", "14", "15", "16", "17", "18", "21"]);
-    map.set('Sprint 17', ["0", "22", "23", "24", "25", "28", "29", "30", "31", "1", "4", "5", "6", "7", "8", "11"]);
-
+    // map.set('Sprint 17', ["0", "22", "23", "24", "25", "28", "29", "30", "31", "1", "4", "5", "6", "7", "8", "11"]);
+    map.set('Sprint 17', ["0", "22", "23", "24", "28", "29", "30", "31", "4", "5", "7", "8", "11"]);
+    map.set('Sprint 18', ["0", "12", "13", "14", "15", "18", "19", "20", "21", "22", "25", "26", "27", "28", "29", "1"]);
+    map.set('Sprint 19', ["0", "2", "3", "4", "5", "8", "9", "10", "11", "12", "15", "16", "17", "18", "19", "22"]);
+    map.set('Sprint 20', ["0", "23", "24", "25", "26", "1", "2", "3", "4", "5", "8", "9", "10", "11", "12", "15"]);
     return map.get(giorno)
   }
 
@@ -258,11 +256,13 @@ export class BurndownComponent implements OnInit, OnDestroy, OnChanges {
 
   getIdeal(tot) {
 
-  
-var tot_giorni = 15;
 
-if (this.selectedSprintNumber == "Sprint 16")
-   tot_giorni = 14;
+    
+
+    var tot_giorni = (this.getGiorni().length) -1 ;
+
+    //if (this.selectedSprintNumber == "Sprint 16")
+     // tot_giorni = 14;
 
     let calc = tot / tot_giorni
     var ideal = []

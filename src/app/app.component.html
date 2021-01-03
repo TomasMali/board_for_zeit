@@ -1,126 +1,118 @@
+<div class="container-flex header_row pt-2 pl-5 pr-5 mt-2  text-white border-dark ">
 
+  <div class="collapse " id="demo" data-toggle="false">
 
-  
-
-
-
-
-
-
-<div class="container-flex header_row pt-2 pl-5 pr-5 mt-2  text-white border-dark "  >
-
-  <div class="collapse " id="demo" data-toggle="false"> 
-
-  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm.value);  searchForm.reset(); ">
-    <div class="row mb-1 mt-3">
-      <div class="col-1 ">
-        <button class="btn btn-dark" type="submit">Search</button>
-      </div>
-      <div class="col-11 ">
-        <input type="text" class="form-control " placeholder="Cerca" aria-label="Username"
-          aria-describedby="basic-addon1" name="searchForm" ngModel>
-      </div>
-
-    </div>
-  </form>
-
-
-  <div class="container bg-dark pt-3 pl-3 pr-3 pb-2 my-3 text-white ">
-
-
-    <form #workItemForm="ngForm" (ngSubmit)="onInsertWiSubmit(workItemForm);  ">
-
-      <div class="row " tabindex="-1">
-
-        <div class="col col-0 col-md -1">
-        
-
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm.value);  searchForm.reset(); ">
+      <div class="row mb-1 mt-3">
+        <div class="col-1 ">
+          <button class="btn btn-dark" type="submit">Search</button>
         </div>
-
-        <div class="col col-12 col-md-3">
-
-          <div class="input-group mb-2" tabindex="1" >
-            <div class="input-group-prepend ">
-              <span class="input-group height-span input-group-text "><b>WI</b> </span>
-            </div>
-            <input type="number" class="form-control form-control-sm" placeholder="Work item" name="workItemForm"
-              ngModel>
-          </div>
-  
-
-          <div class="input-group mb-2" tabindex="2" >
-            <div class="input-group-prepend">
-              <span class="input-group-text height-span "><b>S.Point</b> </span>
-            </div>
-            <input type="number" class="form-control form-control-sm" placeholder="Story point" name="storyPointForm"
-              ngModel>
-          </div>
-
-
-
-
+        <div class="col-11 ">
+          <input type="text" class="form-control " placeholder="Cerca" aria-label="Username"
+            aria-describedby="basic-addon1" name="searchForm" ngModel>
         </div>
-
-
-        <div class="col col-12 col-md-3">
-
-       
-
-
-
-          <div class="input-group mb-2" tabindex="3">
-            <div class="input-group-prepend">
-              <span class="input-group-text height-span "><b>Desc</b> </span>
-            </div>
-            <input type="text"  class="form-control  form-control-sm" placeholder="Wi descrizione" name="descForm"
-              ngModel>
-          </div>
-
-
-          <div class="input-group mb-2">
-
-            <div class="input-group-prepend">
-              <span class="input-group-text height-span "><b>Sprint</b> </span>
-            </div>
-
-            <select  tabindex="4" class="ml-0" (change)="onSprintChange($event.target.value)" [(ngModel)]="selectedSprintNumber"
-              name="selectedSprintNumber" [value]='selectedSprintNumber'>
-              <option *ngFor="let sprint of sprintNumber">{{sprint}}</option>
-            </select>
-
-          </div>
-
-        </div>
-
-        <div class="col col-12 col-md-4">
-
-          <div class="input-group mb-2">
-            <input type="submit" value="Crea WorkItem" class="btn btn-sm btn-primary">
-          </div>
-        </div>
-
-        <div class="col col-0  col-md-1"></div>
 
       </div>
     </form>
 
 
+    <div class="container bg-dark pt-3 pl-3 pr-3 pb-2 my-3 text-white ">
 
+
+      <form #workItemForm="ngForm" (ngSubmit)="onInsertWiSubmit(workItemForm);  ">
+
+        <div class="row " tabindex="-1">
+
+          <div class="col col-0 col-md -1">
+
+
+          </div>
+
+          <div class="col col-12 col-md-3">
+
+            <div class="input-group mb-2" tabindex="1">
+              <div class="input-group-prepend ">
+                <span class="input-group height-span input-group-text "><b>WI</b> </span>
+              </div>
+              <input type="number" class="form-control form-control-sm" placeholder="Work item" name="workItemForm"
+                ngModel>
+            </div>
+
+
+            <div class="input-group mb-2" tabindex="2">
+              <div class="input-group-prepend">
+                <span class="input-group-text height-span "><b>S.Point</b> </span>
+              </div>
+              <input type="number" class="form-control form-control-sm" placeholder="Story point" name="storyPointForm"
+                ngModel>
+            </div>
+
+
+
+
+          </div>
+
+
+          <div class="col col-12 col-md-3">
+
+
+
+
+
+            <div class="input-group mb-2" tabindex="3">
+              <div class="input-group-prepend">
+                <span class="input-group-text height-span "><b>Desc</b> </span>
+              </div>
+              <input type="text" class="form-control  form-control-sm" placeholder="Wi descrizione" name="descForm"
+                ngModel>
+            </div>
+
+
+            <div class="input-group mb-2">
+
+              <div class="input-group-prepend">
+                <span class="input-group-text height-span "><b>Sprint</b> </span>
+              </div>
+
+              <select tabindex="4" class="ml-0" (change)="onSprintChange($event.target.value)"
+                [(ngModel)]="selectedSprintNumber" name="selectedSprintNumber" [value]='selectedSprintNumber'>
+                <option *ngFor="let sprint of sprintNumber">{{sprint}}</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="col col-12 col-md-4">
+
+            <div class="input-group mb-2">
+              <input type="submit" value="Crea WorkItem" class="btn btn-sm btn-primary">
+            </div>
+          </div>
+
+          <div class="col col-0  col-md-1"></div>
+
+        </div>
+      </form>
+
+
+
+    </div>
   </div>
-</div>
 
 
 
-<div class="container mb-1 red" data-toggle="collapse"  data-target="#demo" (click)="collapse=!collapse" >
-  <div class="row">
-    <div class="col text-center">
+  <div class="container mb-1 red" data-toggle="collapse" data-target="#demo" (click)="collapse=!collapse">
+    <div class="row">
+      <div class="col text-center">
 
-      <div >
-     <h6 class="text-white"> <b> {{selectedSprintNumber}} </b>   <i class="fa" [ngClass]="{'fa-chevron-up': collapse, 'fa-chevron-down': !collapse}"></i>   </h6> 
+        <div>
+          <h6 class="text-white"> <b> {{selectedSprintNumber}} </b> <i class="fa"
+              [ngClass]="{'fa-chevron-up': collapse, 'fa-chevron-down': !collapse}"></i> </h6>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 </div>
@@ -133,16 +125,17 @@
 
     <div class="col bg-danger mr-1  text-center" [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark"> 
-        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
-      <!--  <i class="fas fa-align-right"></i>  -->  
-        TO DO 
-         <!--  <small class="pl-2 font-weight-bold font-italic "> ({{percTodo | number  }}%)</small> -->
+      <h5 class="font-weight-bold p-1 border-dark">
+        <i class="fas fa-align-right"></i>
+        TO DO
+        <small class="pl-2 font-weight-bold font-italic "> ({{percTodo | number }}%)</small>
+        <!--  
          <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
-
+         -->
       </h5>
       <hr>
-      <div class="list-group  " [ngClass]="{'scroll': getToDo().length >= 4 && collapse , 'scroll_collapse': !collapse && getToDo().length >= 3} ">
+      <div class="list-group  "
+        [ngClass]="{'scroll': getToDo().length >= 4 && collapse , 'scroll_collapse': !collapse && getToDo().length >= 3} ">
 
         <app-wokitem *ngFor="let workitem of getToDo();  let i = index" [workitem]="workitem"></app-wokitem>
 
@@ -151,19 +144,22 @@
 
 
 
-    <div class="col bg-warning mr-1  text-center" [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
+    <div class="col bg-warning mr-1  text-center"
+      [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark"> 
-        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
-      <!-- <i class="fas fa-hourglass-start"></i> -->  START WORKING 
-      <!-- <small class="pl-2 font-weight-bold font-italic "> ({{percStart | number }}%)</small>
-      -->
-      <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+      <h5 class="font-weight-bold p-1 border-dark">
+        <!--   <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt=""> -->
 
+        <i class="fas fa-hourglass-start"></i> START WORKING
+        <small class="pl-2 font-weight-bold font-italic "> ({{percStart | number }}%)</small>
+        <!--
+      <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+-->
       </h5>
       <hr>
 
-      <div class="list-group " [ngClass]="{'scroll': getStartWorking().length >= 4 && collapse , 'scroll_collapse': !collapse && getStartWorking().length >= 3 } ">
+      <div class="list-group "
+        [ngClass]="{'scroll': getStartWorking().length >= 4 && collapse , 'scroll_collapse': !collapse && getStartWorking().length >= 3 } ">
         <app-wokitem *ngFor="let workitem of getStartWorking(); let i = index" [workitem]="workitem">
         </app-wokitem>
       </div>
@@ -173,17 +169,23 @@
 
     <div class="col bg-success mr-1 " [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
-      <h5 class="font-weight-bold p-1 border-dark text-center "> 
-       <!-- <i class="fas fa-tasks"></i>  -->
-        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+      <h5 class="font-weight-bold p-1 border-dark text-center ">
+        <i class="fas fa-tasks"></i>
+        <!-- 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50"
+          height="50" alt="">
+          -->
         TEST
-        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
-
-        <!--<small class="pl-2 font-weight-bold font-italic "> ({{percTest | number  }}%)</small> --> 
-        </h5>
+        <!--
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50"
+          height="50" alt="">
+-->
+        <small class="pl-2 font-weight-bold font-italic "> ({{percTest | number }}%)</small>
+      </h5>
       <hr>
 
-      <div class="list-group" [ngClass]="{'scroll': getTest().length >= 4 && collapse , 'scroll_collapse': !collapse && getTest().length >= 3 }">
+      <div class="list-group"
+        [ngClass]="{'scroll': getTest().length >= 4 && collapse , 'scroll_collapse': !collapse && getTest().length >= 3 }">
 
         <app-wokitem *ngFor="let workitem of getTest()" [workitem]="workitem">
         </app-wokitem>
@@ -194,17 +196,23 @@
     <div class="col bg-primary " [ngClass]="{'col_height_collapse': collapse, 'col_height': !collapse}">
       <hr>
       <h5 class="font-weight-bold p-1 border-dar text-center " [class.text-dark]="false">
-        <!-- <i class="fas fa-check"></i> --> 
-         <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
-        DONE 
-        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50" height="50" alt="">
+        <i class="fas fa-check"></i>
+        <!-- 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50"
+          height="50" alt="">
+          -->
+        DONE
+        <!-- 
+        <img src="https://freepngimg.com/thumb/christmas/4-christmas-santa-claus-red-hat-png-image.png" width="50"
+          height="50" alt="">
+-->
+        <small class="pl-2 font-weight-bold font-italic "> ({{percDone | number }}%)</small>
 
-       <!-- <small class="pl-2 font-weight-bold font-italic "> ({{percDone | number  }}%)</small> -->
-      
       </h5>
       <hr>
 
-      <div class="list-group " [ngClass]="{'scroll': getDone().length >= 4 && collapse , 'scroll_collapse': !collapse && getDone().length >= 3}">
+      <div class="list-group "
+        [ngClass]="{'scroll': getDone().length >= 4 && collapse , 'scroll_collapse': !collapse && getDone().length >= 3}">
 
         <app-wokitem *ngFor="let workitem of getDone()" [workitem]="workitem">
         </app-wokitem>
@@ -232,15 +240,10 @@
 
 
 
-   <!--  <button class="btn btn-sm-primary"  data-toggle="modal" data-target="#exampleModal1" (click)="fai(workitem.sprint)"><i class = "far fa-copy" ></i> </button>
+  <!--  <button class="btn btn-sm-primary"  data-toggle="modal" data-target="#exampleModal1" (click)="fai(workitem.sprint)"><i class = "far fa-copy" ></i> </button>
 -->
 
-<app-burndown [selectedSprintNumber]="selectedSprintNumber"></app-burndown>
+  <app-burndown [selectedSprintNumber]="selectedSprintNumber"></app-burndown>
 
 
 </div>
-
-
-
-
-
